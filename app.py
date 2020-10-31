@@ -18,11 +18,6 @@ Base = automap_base()
 # reflect the tables
 Base.prepare(engine, reflect=True)
 
-# Save reference to the table
-Measurement = Base.classes.measurement
-  
-Station= Base.classes.station
-
 #################################################
 # Flask Setup
 #################################################
