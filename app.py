@@ -11,7 +11,7 @@ from flask import Flask, jsonify
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///Resources/hawaii.sqlite")
+engine = create_engine("sqlite:///Resources/******")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -56,54 +56,49 @@ def piechart():
 
     session.close()
 
-    Last_list = list(np.ravel(Last_day))
-
-    return jsonify(Last_day)
+    
+    return jsonify(piechart)
 
     
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
-    results = session.query(.station).all()
+    racecar = session.query(
+        "SELECT country, population, new_displacement, year, start_date, FROM merged_data").first()
 
     session.close() 
 
-    prcp_list = list(np.ravel(active_stations))
-
-    return jsonify(prcp_list)
+    return jsonify(racecar)
 
 @app.route("/api/v1.0/barchart")
 def barchart():
-    # active_stations = session.query("SELECT DISTINCT station FROM station").first() 
+    Displaced = session.query("SELECT country, new_displacement, year, start_date, FROM merged_data").filter(new_displacement).limit(5).all()
 
     session.close()
 
-    # Convert list of tuples into normal list
-    # tobs = list(np.ravel(active_stations))
+    bardata = list(np.ravel(Displaced))
 
-    return jsonify(tobs)
+    return jsonify(barchart)
 
 @app.route("/api/v1.0/<start>")
 def start():
-    # active_stations = session.query(Measure.date, Measure.prcp).filter(
-    #     Measure.date > "2016-08-23").all()
+     starting_point = session.query(merged_data.year, merged_data.population).filter(
+         merged_data.year > "2014-01-01").all()
 
     session.close()
 
-    # Convert list of tuples into normal list
-    start = list(np.ravel(active_stations))
 
     return jsonify(start)
 
 @app.route("/api/v1.0/<end>")
 def end():
-    end_stations = session.query(Measure.date, Measure.prcp).filter(
-        Measure.date == "2017-08-23").all()
+    ending_point = session.query(merged_data.year, merged_data.population).filter(
+         Measure.date == "2019-12-30").all()
 
     session.close()
 
     # Convert list of tuples into normal list
-    tobs = list(np.ravel(end_stations))
+    end = list(np.ravel(ending_point))
 
     return jsonify(end)
 
@@ -111,3 +106,5 @@ def end():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
