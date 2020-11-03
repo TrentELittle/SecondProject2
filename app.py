@@ -12,7 +12,7 @@ from flask import Flask, jsonify
 # Database Setup
 #################################################
 engine = create_engine(
-    "/Users/matthewrose/Documents/GitHub/SecondProject2/Resources/queries.sql")
+    "enter postrgress address here")
 
 # reflect an existing database into a new model
 Base = automap_base()
