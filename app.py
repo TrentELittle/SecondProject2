@@ -5,14 +5,14 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 
 #################################################
 # Database Setup
 #################################################
-engine = create_engine(
-    "enter postrgress address here")
+connection_string = "postgres:@localhost/project2_db"
+engine = create_engine(f'postgresql://{connection_string}')
 
 # reflect an existing database into a new model
 Base = automap_base()
