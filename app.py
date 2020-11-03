@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -11,7 +11,8 @@ from flask import Flask, jsonify
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///Resources/******")
+engine = create_engine(
+    "/Users/matthewrose/Documents/GitHub/SecondProject2/Resources/queries.sql")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -23,10 +24,16 @@ Base.prepare(engine, reflect=True)
 #################################################
 app = Flask(__name__)
 
-session=Session(engine)
+session = Session(engine)
 #################################################
 # Flask Routes
 #################################################
+
+
+@app.route("/")
+def home():
+    return render_template('index.html')
+
 
 @app.route("/")
 def welcome():
@@ -45,43 +52,42 @@ def welcome():
 @app.route("/api/v1.0/piechart")
 def piechart():
 
-    conflicts= session.query("SELECT conflict FROM Hazard type")
+    conflicts = session.query("SELECT conflict FROM Hazard type")
 
     disasters = session.query("SELECT natural distease, FROM Hazard type")
 
     session.close()
 
-    
     return jsonify(piechart)
 
-    
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
     racecar = session.query(
         "SELECT country, population, new_displacement, year, start_date, FROM merged_data").first()
 
-    session.close() 
+    session.close()
 
     return jsonify(racecar)
 
+
 @app.route("/api/v1.0/barchart")
 def barchart():
-    Displaced = session.query("SELECT country, new_displacement, year, start_date, FROM merged_data").filter(new_displacement).limit(5).all()
+    Displaced = session.query("SELECT country, new_displacement, year, start_date, FROM merged_data").filter(
+        new_displacement).limit(5).all()
 
     session.close()
 
-    bardata = list(np.ravel(Displaced))
+    # bardata = list(np.ravel(Displaced))
 
-    return jsonify(barchart)
+    return jsonify(Displaced)
+
 
 @app.route("/api/v1.0/<start>")
 def start():
-     starting_point = session.query(merged_data.year, merged_data.population).filter(
+    starting_point = session.query(merged_data.year, merged_data.population).filter(
          merged_data.year > "2014-01-01").all()
-
     session.close()
-
 
     return jsonify(start)
 
@@ -93,9 +99,9 @@ def end():
     session.close()
 
     # Convert list of tuples into normal list
-    end = list(np.ravel(ending_point))
+    # end = list(np.ravel(ending_point))
 
-    return jsonify(end)
+    return jsonify(ending_point)
 
 
 
