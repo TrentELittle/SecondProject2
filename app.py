@@ -1,5 +1,4 @@
-# import numpy as np
-
+import numpy as np
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -24,8 +23,8 @@ Base.prepare(engine, reflect=True)
 #################################################
 # Flask Setup
 #################################################
-app = Flask(__name__)
 
+app = Flask(__name__, template_folder='Template')
 session = Session(engine)
 #################################################
 # Flask Routes
@@ -34,7 +33,7 @@ session = Session(engine)
 
 @app.route("/")
 def home():
-    return render_template('index.html', name=name)
+    return render_template('index.html')
 
 
 @app.route("/")
@@ -53,43 +52,38 @@ def welcome():
 
 @app.route("/api/v1.0/piechart")
 def piechart():
-
-    piechart = session.query("SELECT * FROM piechart")
-
+    piedata = session.query('SELECT Hazard_type, new_displacement, year, start_date FROM merged_data ').fetchall()
     session.close()
-
+    piechart = list(np.ravel(pie))
     return jsonify(piechart)
     return redirect("/")
 
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
-
-    racecar = session.query("Select * FROM racecar")
-    
-
+    racedata=session.query("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
-
+    racecar list(np.ravel(racedata))
     return jsonify(racecar)
 
     return redirect("/")
 
 
-return redirect("/")
-
-
 @app.route("/api/v1.0/barchart")
 def barchart():
-    barchart = session.query("SELECT * FROM barchart")
-
-    # "SELECT country, new_displacement, year, start_date, FROM merged_data").filter(new_displacement).limit(5).all()
-
+    bardata=session.query("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
-
+    barchart = list(np.ravel(bardata))
     return jsonify(barchart)
 
     return redirect("/")
 
+@ app.errorhandler(404)
+ def page_not_found(e):
+    return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 if __name__ == '__main__':
+    
     app.run(debug=True)
+
+        
