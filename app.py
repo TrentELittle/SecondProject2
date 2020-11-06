@@ -11,7 +11,9 @@ from flask import Flask, jsonify, render_template
 #################################################
 # Database Setup
 #################################################
-connection_string = "'postgresql://matthewrose:@localhost/project2_db"
+
+connection_string = "postgres:@localhost/project2_db"
+
 engine = create_engine(f'postgresql://{connection_string}')
 
 # reflect an existing database into a new model
@@ -62,8 +64,10 @@ def piechart():
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
+
     racecar = session.query("Select * FROM racecar")
     
+
     session.close()
 
     return jsonify(racecar)
@@ -71,9 +75,13 @@ def racecar():
     return redirect("/")
 
 
+return redirect("/")
+
+
 @app.route("/api/v1.0/barchart")
 def barchart():
     barchart = session.query("SELECT * FROM barchart")
+
     # "SELECT country, new_displacement, year, start_date, FROM merged_data").filter(new_displacement).limit(5).all()
 
     session.close()
