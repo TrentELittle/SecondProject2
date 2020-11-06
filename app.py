@@ -11,7 +11,9 @@ from flask import Flask, jsonify, render_template
 #################################################
 # Database Setup
 #################################################
+
 connection_string = "postgres:@localhost/project2_db"
+
 engine = create_engine(f'postgresql://{connection_string}')
 
 # reflect an existing database into a new model
@@ -62,12 +64,15 @@ def piechart():
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
-    racecar = session.query(Select * FROM racecar)
-    # "SELECT country, population, new_displacement, year, start_date, FROM merged_data").first()
+
+    racecar = session.query("Select * FROM racecar")
+    
 
     session.close()
 
     return jsonify(racecar)
+
+    return redirect("/")
 
 
 return redirect("/")
@@ -75,7 +80,8 @@ return redirect("/")
 
 @app.route("/api/v1.0/barchart")
 def barchart():
-    barchart= session.query(SELECT * FROM barchart)
+    barchart = session.query("SELECT * FROM barchart")
+
     # "SELECT country, new_displacement, year, start_date, FROM merged_data").filter(new_displacement).limit(5).all()
 
     session.close()
@@ -83,28 +89,6 @@ def barchart():
     return jsonify(barchart)
 
     return redirect("/")
-
-
-# @app.route("/api/v1.0/<start>")
-# def start():
-
-#     starting_point = session.query(merged_data.year, merged_data.population).filter(
-#          merged_data.year > "2014-01-01").all()
-#     session.close()
-
-#     return jsonify(start)
-
-# @app.route("/api/v1.0/<end>")
-# def end():
-#     ending_point = session.query(merged_data.year, merged_data.population).filter(
-#          Measure.date == "2019-12-30").all()
-
-#     session.close()
-
-    # Convert list of tuples into normal list
-    # end = list(np.ravel(ending_point))
-
-    # return jsonify(ending_point)
 
 
 if __name__ == '__main__':
