@@ -23,6 +23,7 @@ Base.prepare(engine, reflect=True)
 #################################################
 # Flask Setup
 #################################################
+app = Flask(__name__, template_folder = 'Template')
 
 app = Flask(__name__, template_folder='Template')
 session = Session(engine)
@@ -83,7 +84,5 @@ def barchart():
     return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 if __name__ == '__main__':
-    
-    app.run(debug=True)
 
-        
+    app.run(debug=True)
