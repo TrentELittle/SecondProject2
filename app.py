@@ -24,7 +24,7 @@ Base.prepare(engine, reflect=True)
 #################################################
 # Flask Setup
 #################################################
-app = Flask(__name__)
+app = Flask(__name__, template_folder = 'Template')
 
 session = Session(engine)
 #################################################
@@ -34,7 +34,7 @@ session = Session(engine)
 
 @app.route("/")
 def home():
-    return render_template('index.html', name=name)
+    return render_template('index.html')
 
 
 @app.route("/")
@@ -73,9 +73,6 @@ def racecar():
     return jsonify(racecar)
 
     return redirect("/")
-
-
-return redirect("/")
 
 
 @app.route("/api/v1.0/barchart")
