@@ -55,7 +55,7 @@ def welcome():
 def piechart():
     piedata = session.query('SELECT Hazard_type, new_displacement, year, start_date FROM merged_data ').fetchall()
     session.close()
-    piechart = list(np.ravel(pie))
+    piechart = list(np.ravel(piedata))
     return jsonify(piechart)
     return redirect("/")
 
@@ -64,7 +64,7 @@ def piechart():
 def racecar():
     racedata=session.query("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
-    racecar list(np.ravel(racedata))
+    racecar = list(np.ravel(racedata))
     return jsonify(racecar)
 
     return redirect("/")
@@ -79,9 +79,9 @@ def barchart():
 
     return redirect("/")
 
-@ app.errorhandler(404)
- def page_not_found(e):
-    return "<h1>404</h1><p>The resource could not be found.</p>", 404
+# @ app.errorhandler(404)
+# def page_not_found(e):
+#     return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 if __name__ == '__main__':
 
