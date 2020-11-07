@@ -51,10 +51,9 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Visualizations</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="../Template/racecar.html">New Disaster Displacement by Country</a>
-              <a class="dropdown-item" href="../Template/barchart.html">Visualization 1</a>
-              <a class="dropdown-item" href="../Template/Piechart.html">Visualization 3</a>
-              <a class="dropdown-item" href="../Template/visualization4.html">Visualization 4</a>
+              <a class="dropdown-item" href="{{url_for('racecar')}}">New Disaster Displacement by Country</a>
+              <a class="dropdown-item" href="../templates/barchart.html">Displacement Causes</a>
+              <a class="dropdown-item" href="../templates/Piechart.html">Conflict vs. Disaster</a>
             </div>
           </li>
         </ul>
@@ -68,9 +67,15 @@
     
 <main role="main" class="container">
 
-</main>
+  <div class="container-fluid">
+    <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-sm-offset-1">
+          <!-- <div class="flourish-embed" data-src="../Template/index.html"><script src="../HorseRace_vis/flourish.embed.js"></script></div> -->
+          <h2>By Displacement Type</h2>
+          <img src="../Charts/out.png"alt = "Displacement" style = "width:auto">
+        </div>
 
-</main><!-- /.container -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../Static/bootstrap.bundle.min.js"></script>
 </body>
