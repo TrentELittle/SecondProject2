@@ -67,7 +67,7 @@ def racecar():
     racecar = list(np.ravel(racedata))
     return jsonify(racecar)
 
-    return render_template("racecar.html")
+    return render_template("templates/racecar.html")
 
 
 @app.route("/api/v1.0/barchart")
