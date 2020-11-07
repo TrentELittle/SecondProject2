@@ -12,7 +12,7 @@ from flask import Flask, jsonify, render_template, url_for
 # Database Setup
 #################################################
 
-connection_string = "postgres:TL!ttl310@localhost/project2_db"
+connection_string = "postgres:@localhost/project2_db"
 
 engine = create_engine(f'postgresql://{connection_string}')
 
@@ -67,7 +67,7 @@ def racecar():
     racecar = list(np.ravel(racedata))
     return jsonify(racecar)
 
-    return render_template("templates/racecar.html")
+    return render_template("racecar.html")
 
 
 @app.route("/api/v1.0/barchart")
