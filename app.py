@@ -1,17 +1,18 @@
 import numpy as np
+import psycopg2
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, url_for
 
 
 #################################################
 # Database Setup
 #################################################
 
-connection_string = "postgres:@localhost/project2_db"
+connection_string = "postgres:TL!ttl310@localhost/project2_db"
 
 engine = create_engine(f'postgresql://{connection_string}')
 
@@ -23,9 +24,8 @@ Base.prepare(engine, reflect=True)
 #################################################
 # Flask Setup
 #################################################
-app = Flask(__name__, template_folder = 'Template')
+app = Flask(__name__)
 
-app = Flask(__name__, template_folder='Template')
 session = Session(engine)
 #################################################
 # Flask Routes
@@ -57,17 +57,17 @@ def piechart():
     session.close()
     piechart = list(np.ravel(piedata))
     return jsonify(piechart)
-    return redirect("/")
+    # return redirect("/")
 
 
 @app.route("/api/v1.0/racecar`")
 def racecar():
-    racedata=session.query("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
+    racedata=session.execute("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
     racecar = list(np.ravel(racedata))
     return jsonify(racecar)
 
-    return redirect("/")
+    return render_template("racecar.html")
 
 
 @app.route("/api/v1.0/barchart")
@@ -77,7 +77,7 @@ def barchart():
     barchart = list(np.ravel(bardata))
     return jsonify(barchart)
 
-    return redirect("/")
+    # return redirect("/")
 
 # @ app.errorhandler(404)
 # def page_not_found(e):
@@ -85,4 +85,4 @@ def barchart():
 
 if __name__ == '__main__':
 
-    app.run(debug=True)
+    app.run()
