@@ -12,7 +12,7 @@ from flask import Flask, jsonify, render_template, url_for
 # Database Setup
 #################################################
 
-connection_string = "postgres:@localhost/project2_db"
+connection_string = "postgres:TL!ttl310@localhost/project2_db"
 
 engine = create_engine(f'postgresql://{connection_string}')
 
@@ -65,7 +65,7 @@ def racecar():
     racedata=session.execute("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
     racecar = list(np.ravel(racedata))
-    return jsonify(racecar)
+    # return jsonify(racecar)
 
     return render_template("racecar.html")
 
