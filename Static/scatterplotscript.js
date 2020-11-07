@@ -4,7 +4,7 @@ var margin = { top: 10, right: 30, bottom: 30, left: 60 },
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#scatterplotscript")  // Add # so the select looks for the div id.
+var svg = d3.select("#scatterplotscript")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -14,13 +14,10 @@ var svg = d3.select("#scatterplotscript")  // Add # so the select looks for the 
 
 //Read the data
 d3.csv("merged.csv", function (data) {
-    // This is called once per row, should be called once with all rows!
-    // What is wrong with d3.csv!!??
-    console.log(data);
 
     // Add X axis
     var x = d3.scaleLinear()
-        .domain([2009, 2019])  // Set to min and max of the years.
+        .domain([2009, 2019])
         .range([0, width]);
 
     svg.append("g")
@@ -29,18 +26,34 @@ d3.csv("merged.csv", function (data) {
 
     // Add Y axis
     var y = d3.scaleLinear()
-        .domain([0, 1000000])  // Dataset has a max of 900k, set a max near there.
+        .domain([0, 1000])
         .range([height, 0]);
     svg.append("g")
         .call(d3.axisLeft(y));
+
+    // text label for the x and y axis
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width)
+        .attr("y", height - 6)
+        .text("Year");
+
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("New Displacements");
+
 
     // Color scale: give me a specie name, I return a color
     var color = d3.scaleOrdinal()
         // Use the 2 hazard categories and 2 of the color options.
         .domain(['Weather related', 'Geophysical'])
         .range(["#440154ff", "#21908dff"]);
-    //.domain(["setosa", "versicolor", "virginica"])
-    //.range(["#440154ff", "#21908dff", "#fde725ff"])
+
 
     // Add dots
     var myCircle = svg.append('g')
