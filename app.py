@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import psycopg2
 import sqlalchemy
@@ -5,7 +6,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify, render_template, url_for
+from flask import Flask, jsonify, render_template, url_for, send_from_directory
 
 
 #################################################
@@ -36,6 +37,13 @@ session = Session(engine)
 def home():
     return render_template('index.html')
 
+@app.route("/api/v1.0/2008/2019`")
+def datatable():
+    return render_template('data.html')
+
+@app.route("/")
+def team():
+    return render_template('Team.html')
 
 @app.route("/")
 def welcome():
@@ -44,7 +52,7 @@ def welcome():
         f"Available Routes:<br/>"
         f"/api/v1.0/racecar<br/>"
         f"/api/v1.0/piechart<br/>"
-        f"/api/v1.0/bar<br/>"
+        f"/api/v1.0/scatter<br/>"
         f"/api/v1.0/<start><br/>"
         f"/api/v1.0/<start>/<end>`<br/>"
 
@@ -53,14 +61,14 @@ def welcome():
 
 @app.route("/api/v1.0/piechart")
 def piechart():
-    piedata = session.query('SELECT Hazard_type, new_displacement, year, start_date FROM merged_data ').fetchall()
+    piedata = session.execute('SELECT Hazard_type, new_displacement, year, start_date FROM merged_data ').fetchall()
     session.close()
     piechart = list(np.ravel(piedata))
-    return jsonify(piechart)
+
+    return render_template('Piechart.html')
     # return redirect("/")
 
-
-@app.route("/api/v1.0/racecar`")
+@app.route("/api/v1.0/racecar")
 def racecar():
     racedata=session.execute("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
@@ -70,15 +78,20 @@ def racecar():
     return render_template("racecar.html")
 
 
-@app.route("/api/v1.0/barchart")
-def barchart():
-    bardata=session.query("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
+@app.route("/api/v1.0/scatter")
+def scatterplot():
+    scatter_data=session.execute("SELECT country, new_displacement, year, start_date FROM merged_data").fetchall()
     session.close()
-    barchart = list(np.ravel(bardata))
-    return jsonify(barchart)
+    scatter = list(np.ravel(scatter_data))
+    # return jsonify(scatter)
 
+    return render_template("scatterplot.html")
     # return redirect("/")
 
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    
 # @ app.errorhandler(404)
 # def page_not_found(e):
 #     return "<h1>404</h1><p>The resource could not be found.</p>", 404
