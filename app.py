@@ -1,6 +1,5 @@
 import os
 import numpy as np
-# import psycopg2
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
