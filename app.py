@@ -13,7 +13,7 @@ from flask import Flask, jsonify, render_template, url_for, send_from_directory
 # Database Setup
 #################################################
 
-connection_string = "postgres:TL!ttl310@localhost/project2_db"
+connection_string = "postgres:@localhost/project2_db"
 
 engine = create_engine(f'postgresql://{connection_string}')
 
